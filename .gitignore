@@ -1,0 +1,7 @@
+__pycache__/
+env/
+.env
+*.egg-info/
+*.egg
+.DS_Store
+setupenv.sh
