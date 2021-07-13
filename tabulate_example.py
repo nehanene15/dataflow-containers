@@ -39,25 +39,12 @@ def run(argv=None, save_main_session=True):
   parser.add_argument(
       '--input',
       dest='input',
-    #   default='gs://mayo-dataflow-test/input.txt',
       help='Input file to process.')
   parser.add_argument(
       '--output',
       dest='output',
-    #   default='tabulate',
       help='Output file to write results to.')
   known_args, pipeline_args = parser.parse_known_args(argv)
-#   pipeline_args.extend([
-#       '--runner=DataflowRunner',
-#       '--project=mayo-pso-pocs',
-#       '--region=us-central1',
-#       '--staging_location=gs://mayo-dataflow-test/stage',
-#       '--temp_location=gs://mayo-dataflow-test/temp',
-#       '--experiment=use_runner_v2',
-#       '--jobName=tabulate-job',
-#       '--worker_harness_container_image=gcr.io/mayo-pso-pocs/beam-python-sdk-gcp:3.0',
-#       '--setup_file=./setup.py'
-#   ])
 
   # We use the save_main_session option because one or more DoFn's in this
   # workflow rely on global context (e.g., a module imported at module level).
@@ -69,7 +56,7 @@ def run(argv=None, save_main_session=True):
     # Read the text file into a PCollection.
     lines = p | ReadFromText(known_args.input)
     
-    # Parse line to create YAML structure
+    # Use tabulate to format lines
     def pretty_print(line):
         words = line.split()
         return tabulate([words])
